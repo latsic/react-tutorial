@@ -1,0 +1,12 @@
+
+.UserInput {
+  margin: 6px auto;
+  border: 2px solid blue;
+  width: 50%;
+}
+
+.UserInput input {
+  margin: 5px 10% 5px 10%;
+  width: 80%;
+  
+}
