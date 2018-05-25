@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 //import Radium, { StyleRoot } from 'radium';
 
-//import appClasses from './App.css';
+import classes from './App.css';
 
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
@@ -18,6 +18,34 @@ class App extends Component {
     ],
     showPersons: false
   };
+
+  constructor(props) {
+    super(props);
+    console.log(`appJs, constructor body executing, ${props}`);
+
+    // may initialize state 
+    // don't cause side effects
+  }
+
+  UNSAFE_componentWillMount() {
+    console.log('appJs, UNSAFE_componentWillMount body executing');
+
+    // not really used anymore
+  }
+
+  componentDidMount() {
+    console.log('appJs, componentDidMount body executing');
+
+    // don't update the state
+    // you can cause side-effects
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('appJs, shouldComponentUpdate body executing');
+
+    //return this.state.showPersons !== nextState.showPersons;
+    return true;
+  }
 
   deletePersonHandler = (personIndex) => {
 
@@ -55,6 +83,8 @@ class App extends Component {
 
   render() {
 
+    console.log('appJs, render body executing');
+
     let persons = null;
 
     if (this.state.showPersons) {
@@ -67,8 +97,15 @@ class App extends Component {
         </Persons>
     }
     return (
-      <div>
+      <div className={classes.app}>
+        <button
+          
+          onClick={() => {this.setState({showPersons: true})}}
+          >
+          Show Persons
+        </button>
         <Cockpit
+          appTitle={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
