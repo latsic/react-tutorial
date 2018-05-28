@@ -9,6 +9,8 @@ class Persons extends Component {
     super(props);
     console.log(`personsJs, constructor body executing, ${props}`);
 
+    this.lastPersonRef = React.createRef();
+
     // may initialize state 
     // don't cause side effects
   }
@@ -22,10 +24,13 @@ class Persons extends Component {
   componentDidMount() {
     console.log('personsJs, componentDidMount body executing');
 
+    this.lastPersonRef.current.focus();
+
     // don't update the state
     // you can cause side-effects
   }
 
+ 
   render() {
 
     console.log('personsJs, render body executing');
@@ -41,7 +46,11 @@ class Persons extends Component {
           clickPerson={() => this.props.clicked(index)}
           changed={(event) => this.props.changed(event, person.id)}
           key={person.id}
-          >
+          doFocus={index === 0}
+          ref={this.lastPersonRef}
+          authenticated={this.props.isAuthenticated}
+          > Some Children wich are passes as 'props.children'
+            Here it's only text, but it could be anything.
         </Person>
       );
     })

@@ -7,6 +7,10 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
 //import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import withClass from '../hoc/withClass';
+import Auxiliary from '../hoc/Auxiliary';
+
+export const AuthContext = React.createContext(false);
 
 class App extends Component {
 
@@ -16,7 +20,9 @@ class App extends Component {
       { id: '100000002', name: 'Julia', age: 29 },
       { id: '100000003', name: 'Hieha', age: 89 }
     ],
-    showPersons: false
+    showPersons: false,
+    toggleClicked: 0,
+    authenticated: false
   };
 
   constructor(props) {
@@ -76,10 +82,24 @@ class App extends Component {
 
   togglePersonsHandler = () => {
    
-    this.setState({
-      showPersons: !this.state.showPersons
-    })
+    this.setState((prevState, props) =>{
+
+      return {
+        showPersons: !prevState.showPersons,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    });
   };
+
+  loginHandler = () => {
+    console.log('loginHandler');
+    
+    this.setState({
+      authenticated: true
+    });
+
+    console.log("state", this.state);
+  }
 
   render() {
 
@@ -93,13 +113,13 @@ class App extends Component {
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
           persons={this.state.persons}
+          isAuthenticated={this.state.authenticated}
         >
         </Persons>
     }
     return (
-      <div className={classes.app}>
+      <Auxiliary>
         <button
-          
           onClick={() => {this.setState({showPersons: true})}}
           >
           Show Persons
@@ -109,13 +129,47 @@ class App extends Component {
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
         >
         </Cockpit>
-        {persons}
-      </div>
+        <AuthContext.Provider
+          value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
+      </Auxiliary>
+      // <WithClass classes={classes.app}>
+      //   <button
+      //     onClick={() => {this.setState({showPersons: true})}}
+      //     >
+      //     Show Persons
+      //   </button>
+      //   <Cockpit
+      //     appTitle={this.props.title}
+      //     showPersons={this.state.showPersons}
+      //     persons={this.state.persons}
+      //     clicked={this.togglePersonsHandler}
+      //   >
+      //   </Cockpit>
+      //   {persons}
+      // </WithClass>
+      // <div className={classes.app}>
+      //   <button
+      //     onClick={() => {this.setState({showPersons: true})}}
+      //     >
+      //     Show Persons
+      //   </button>
+      //   <Cockpit
+      //     appTitle={this.props.title}
+      //     showPersons={this.state.showPersons}
+      //     persons={this.state.persons}
+      //     clicked={this.togglePersonsHandler}
+      //   >
+      //   </Cockpit>
+      //   {persons}
+      // </div>
     );
   }
 }
 
 //export default Radium(App);
-export default App;
+export default withClass((App), classes.app);

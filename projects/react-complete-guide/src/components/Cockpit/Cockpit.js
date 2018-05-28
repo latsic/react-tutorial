@@ -42,7 +42,7 @@ const cockpit = (props) => {
       //     Toggle Persons
       //   </button>
       // </Aux>
-      <>
+      <Fragment>
         <h1>{props.appTitle}</h1>
         <p className={assignedClasses.join(' ')}>This is really working.</p> 
         <button
@@ -51,7 +51,12 @@ const cockpit = (props) => {
           >
           Toggle Persons
         </button>
-      </>
+        <button
+          onClick={props.login}
+          >
+          Login
+        </button>
+      </Fragment>
     
   );
 };

@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //import Radium from 'radium';
 
 import classes from './Person.css';
+//import WithClass from '../../../hoc/WithClass';
+import withClass from '../../../hoc/withClass';
+import Auxiliary from '../../../hoc/Auxiliary';
+
+import {AuthContext} from '../../../containers/App';
+
+//const Fragment = React.Fragment;
+
 
 class Person extends Component {
+
+  
 
   constructor(props) {
     super(props);
     console.log(`personJs, constructor body executing, ${props}`);
+
+    this.inputElement = React.createRef();
 
     // may initialize state 
     // don't cause side effects
@@ -48,15 +61,36 @@ class Person extends Component {
   }
 */
 
+  componentDidMount() {
+
+    if(this.props.doFocus) {
+      this.inputElement.current.focus();
+    }
+  }
+
+  focus() {
+    this.inputElement.current.focus();
+  }
+
+
   render() {
 
     console.log('personJs, render body executing');
 
 
     return (
-    <div
-      className={classes.Person}
+    <Auxiliary
       >
+      {/* {this.props.authenticated
+        ? <p>Authenticated</p>
+        : <p>NOT authenticated</p>
+      } */}
+
+      <AuthContext.Consumer>
+      {
+        someVal => someVal ? <p>Authenticated</p> : <p>NOT Authenticated</p>
+      }
+      </AuthContext.Consumer>
       <p
         onClick={this.props.clickPerson}>
         I'm a {this.props.name} and I'm {this.props.age} years old, {Math.floor(Math.random() * 30)}
@@ -66,13 +100,50 @@ class Person extends Component {
         type="text" 
         onChange={this.props.changed}
         value={this.props.name}
+        ref={this.inputElement}
       />
-    </div>
+    </Auxiliary>
+    // <WithClass
+    //   classes={classes.Person}
+    //   >
+    //   <p
+    //     onClick={this.props.clickPerson}>
+    //     I'm a {this.props.name} and I'm {this.props.age} years old, {Math.floor(Math.random() * 30)}
+    //   </p>
+    //   <p>{this.props.children}</p>
+    //   <input
+    //     type="text" 
+    //     onChange={this.props.changed}
+    //     value={this.props.name}
+    //   />
+    // </WithClass>
+    // <div
+    //   className={classes.Person}
+    //   >
+    //   <p
+    //     onClick={this.props.clickPerson}>
+    //     I'm a {this.props.name} and I'm {this.props.age} years old, {Math.floor(Math.random() * 30)}
+    //   </p>
+    //   <p>{this.props.children}</p>
+    //   <input
+    //     type="text" 
+    //     onChange={this.props.changed}
+    //     value={this.props.name}
+    //   />
+    // </div>
     );
   }
 }
 
-export default Person;
+Person.propTypes = {
+  clickPerson: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func
+}
+
+
+export default withClass(Person, classes.Person);
 
 
 
