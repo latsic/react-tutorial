@@ -1,0 +1,18 @@
+
+.navbar {
+  margin: 0rem 0;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* border: 1px solid red; */
+  border-bottom: 1px solid grey;
+}
+
+.nav-item {
+  text-decoration: none;
+}
+
+.is-active {
+  color: red;
+}

@@ -1,0 +1,58 @@
+
+.SideDrawer {
+  position: fixed;
+  width: 280px;
+  max-width: 70%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  background-color: white;
+  /* padding: 0px 16px; */
+  box-sizing: border-box;
+  transition: transform 0.9s ease-out;
+}
+
+@media (min-width: 500px) {
+  .SideDrawer {
+    display: none;
+  }
+}
+
+.Open {
+  transform: translateX(0);
+}
+
+.Close {
+  transform: translateX(-100%);
+}
+
+.Header {
+  height: 56px;
+  background-color: #703b09;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Logo {
+  padding: 0px 0;
+  height: 80%;
+  padding-left: 16px;
+  /* margin-bottom: 32px; */
+}
+
+.Hamburger {
+  height: 80%;
+  overflow: hidden;
+  /* outline: 1px solid red; */
+}
+
+.Hamburger2 {
+  height: 70%;
+  width: auto;
+}
+
+nav {
+  padding: 16px 16px;
+}
