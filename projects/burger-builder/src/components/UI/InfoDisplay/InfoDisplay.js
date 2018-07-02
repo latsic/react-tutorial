@@ -8,6 +8,10 @@ import classes from './InfoDisplay.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 
 const infoDisplay = (props) => {
+
+  console.log('rendering info display', props.text);
+  
+
   return (
     
     <Auxiliary>
@@ -15,7 +19,9 @@ const infoDisplay = (props) => {
       <div
         className={classes.TitleBar}
         >
-        <p>{props.title}</p>
+        <p
+          className={classes.Title}
+          >{props.title}</p>
         <div
           className={classes.CloseButton}
           >

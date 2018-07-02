@@ -15,7 +15,15 @@ const withErrorHandler = (WrappedComponent, axios) => {
     reqInterceptor = null;
     resInterceptor = null;
 
+    componentIsMounted = false;
+
+    constructor() {
+      super();
+      this.myId = Math.floor(Math.random() * 1000);
+    }
+
     componentWillMount() {
+      console.log(`[withErrorHandler ${this.myId}] componentWillMount`);
       this.reqInterceptor = axios.interceptors.request.use(req => {
         this.setState({
           error: null
@@ -24,21 +32,35 @@ const withErrorHandler = (WrappedComponent, axios) => {
       });
 
       this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+        console.log(`[withErrorHandler ${this.myId}] resInterceptor error`);
+        
+        console.log('componentIsMounted', this.componentIsMounted);
+        
+        
         this.setState({
           error: error
         });
       });
     }
 
+    componentDidMount() {
+      this.componentIsMounted = true;
+      console.log(`[withErrorHandler ${this.myId}] componentDidMount`, this.componentIsMounted);
+    }
+
     errorConfirmedHandler = () => {
+      console.log(`[withErrorHandler ${this.myId}] errorConfirmHandler`);
+      
       this.setState({
         error: null
       });
     }
 
     componentWillUnmount() {
+      console.log(`[withErrorHandler ${this.myId}] componentWillUnmount`);
+      this.componentIsMounted = false;
       axios.interceptors.request.eject(this.reqInterceptor);
-      axios.interceptors.request.eject(this.resInterceptor);
+      axios.interceptors.response.eject(this.resInterceptor);
     }
 
 

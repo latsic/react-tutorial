@@ -4,11 +4,17 @@ import React from 'react';
 import classes from './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
+
 const burger = (props) => {
 
   console.log('klkalka', props.ingredients);
+  
+  
+  const keys = props.ingredients 
+    ? Object.keys(props.ingredients)
+    : [];
 
-  let transformedIngredients = Object.keys(props.ingredients)
+  let transformedIngredients = keys
     .map(ingredientName => {
       return [...Array(props.ingredients[ingredientName])]
         .map((_, i) => {

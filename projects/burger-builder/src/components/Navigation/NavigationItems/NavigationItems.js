@@ -3,11 +3,14 @@ import React from 'react';
 import classes from './NavigationItems.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 
-const navigationItems = () => {
+const navigationItems = (props) => {
 
   return (
 
-    <ul className={classes.NavigationItems}>
+    <ul
+      className={classes.NavigationItems}
+      onClick={props.clicked}
+      >
       <NavigationItem 
         link={"/burger-builder"}
         >
